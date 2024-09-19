@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
 
+// Ticket number increment
+const AutoIncrement = require("mongoose-sequence")(mongoose);
+
 // Note schema
 const noteSchema = new mongoose.Schema({
   user: {
@@ -20,5 +23,11 @@ const noteSchema = new mongoose.Schema({
     default: false,
   },
   timestamps: true,
+});
+
+noteSchema.plugin(AutoIncrement, {
+  inc_field: "ticket",
+  id: "ticketNums",
+  start_seq: 100,
 });
 module.exports = mongoose.model("Note", noteSchema);
